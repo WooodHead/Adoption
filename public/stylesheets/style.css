@@ -1,0 +1,13 @@
+*{ margin: 0; padding: 0; font-family: "Microsoft Yahei"; font-size: 16px; }
+a{ color: blue; text-decoration: none; }
+
+header{ width: 100%; position: fixed; top: 0; background: #000; }
+header ul{ font-size: 0; }
+header ul li{ display: inline-block; font-size: 16px; width: 25%; text-align: center; height: 30px; line-height: 30px; }
+
+.wrap{ margin-top: 40px; }
+
+.unadopted_list a{ display: block; padding: 20px; position: relative; }
+.unadopted_list a img{ width: 100%; }
+.unadopted_list .general_info{ width: 100%; position: absolute; bottom: 0; left: 0; height: 40px; padding: 10px; background: #000; opacity: 0.7; }
+.unadopted_list .general_info span{ color: #fff; opacity: 1; margin-right: 20px; }

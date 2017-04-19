@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include head.html %>
+<body>
+  <% include header.html %>
+  <div class="wrap">
+    <ul class="unadopted_list">
+      <% cats_info.forEach(function(cat){ %>
+      <li><a class="cat_link" link-id="<%= cat.id %>" href="detail_info?id=<%= cat.id %>">
+        <img src="<%= cat.img_src %>">
+        <div class="general_info">
+          <span>名字：<%= cat.name %></span>
+          <span>性别：<%= cat.sex %></span>
+          <span>年龄：<%= cat.age %></span>
+          <span>性格：<%= cat.nature %></span>
+        </div>
+        </a></li>
+        <% }) %>
+    </ul>
+    <%= cats_info[0] %>
+  </div>
+</body>
+</html>

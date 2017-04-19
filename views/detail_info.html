@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <% include head.html %>
+<body>
+  <% include header.html %>
+
+  <div class="">
+    <img src="<%= cat.img_src %>">
+  </div>
+
+  <div class="detail_info">
+    <ul>
+      <!--<li>
+        id:"cat1", breed:"中华田园猫", color:"三花", name:"NO1", img_src:"images/cat1.jpg", sex:"公", age:"11个月", vaccinum: "已接种疫苗", expelling:"已驱虫", sterilization:"已绝育", nature:"活泼好动", origin:"救助", deposit: "需要", remark:"破坏力强"
+      </li>-->
+      <li>品种：<%= cat.breed %></li>
+      <li>花色：<%= cat.color %></li>
+      <li>名字：<%= cat.name %></li>
+      <li>性别：<%= cat.sex %></li>
+      <li>年龄：<%= cat.age %></li>
+      <li>性格：<%= cat.nature %></li>
+      <li>疫苗情况：<%= cat.vaccinum %></li>
+      <li>驱虫情况：<%= cat.expelling %></li>
+      <li>绝育情况：<%= cat.sterilization %></li>
+      <li>来源：<%= cat.origin %></li>
+      <li>是否需要押金：<%= cat.deposit %></li>
+      <li>备注：<%= cat.remark %></li>
+    </ul>
+
+  </div>
+</body>
+</html>
