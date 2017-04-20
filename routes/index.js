@@ -1,7 +1,8 @@
 var express = require('express');
 var db = require('../conf/db');
-var router = express.Router();
 var common = require('../common');
+
+var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -36,9 +37,12 @@ router.get('/detail_info', function(req, res, next) {
 //var cat = {id:"cat1", breed:"中华田园猫", color:"三花", name:"NO1", img_src:"images/cat1.jpg", sex:"公", age:"11个月", vaccinum: "已接种疫苗", expelling:"已驱虫", sterilization:"已绝育", nature:"活泼好动", origin:"救助", deposit: "需要", remark:"破坏力强"};
 
 router.get('/upload', function(req, res, next){
-  console.log("输出:");
   var cat = {};
-    res.render('upload', {});
+  res.render('upload', {});
+});
+
+router.post('/upload/images', function(req, res, next){
+  console.log(req.body);
 });
 
 router.post('/saveData', function(req, res, next){

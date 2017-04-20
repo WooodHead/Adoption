@@ -4,63 +4,64 @@
 <body>
   <% include header.html %>
   <h1>找家啦~</h1>
-  <form id="" action="saveData" method="post" style="margin-top:50px;">
-    <p>
+  <form id="" action="saveData" method="post" style="margin-top:20px;" class="upload_animal_form" name="upload">
+    <p class="upload_item">
       <label for="name">名字：</label>
       <input type="text" id="name" name="name" >
     </p>
-    <p>
-      <label for="breed">品种</label>
+    <p class="upload_item">
+      <label for="breed">品种：</label>
       <input type="text" id="breed" name="breed" >
     </p>
-    <p>
-      <label for="color">花色</label>
+    <p class="upload_item">
+      <label for="color">花色：</label>
       <input type="text" id="color" name="color" >
     </p>
-    <p>
-      <label for="age">年龄</label>
+    <p class="upload_item">
+      <label for="age">年龄：</label>
       <input type="text" id="age" name="age" >
     </p>
-    <p>
-      <label for="sex">性别</label>
+    <p class="upload_item">
+      <label for="sex">性别：</label>
       <input type="text" id="sex" name="sex" >
     </p>
-    <p>
-      <label for="sterilization">绝育情况</label>
+    <p class="upload_item">
+      <label for="sterilization">绝育情况：</label>
       <input type="text" id="sterilization" name="sterilization" >
     </p>
-    <p>
-      <label for="expelling">驱虫情况</label>
+    <p class="upload_item">
+      <label for="expelling">驱虫情况：</label>
       <input type="text" id="expelling" name="expelling" >
     </p>
-    <p>
-      <label for="vaccinum">疫苗情况</label>
+    <p class="upload_item">
+      <label for="vaccinum">疫苗情况：</label>
       <input type="text" id="vaccinum" name="vaccinum" >
     </p>
-    <p>
-      <label for="nature">性格</label>
+    <p class="upload_item">
+      <label for="nature">性格：</label>
       <input type="text" id="nature" name="nature" >
     </p>
-    <p>
-      <label for="origin">来源</label>
+    <p class="upload_item">
+      <label for="origin">来源：</label>
       <input type="text" id="origin" name="origin" >
     </p>
-    <p>
-      <label for="deposit">押金</label>
+    <p class="upload_item">
+      <label for="deposit">押金：</label>
       <input type="text" id="deposit" name="deposit" >
     </p>
-    <p>
-      <label for="remark">备注</label>
+    <p class="upload_item">
+      <label for="remark">备注：</label>
       <input type="text" id="remark" name="remark" >
     </p>
-    <p>
+    <p class="upload_item">
       <label>高清美照</label>
-      <ul>
-        <span>
-          <input type="file" id="photo" onchange="selectImage(this)">  
-        <span>
-        <span>每次只能上传一张，最多上传6张</span>
-        <div id="click" style="max-width:100px;border: 1px solid #000;"></div>
+      <ul class="upload_img_ul">
+        <span class="upload_img_tips">每次只能上传一张，最多上传6张</span>
+        <li class="upload_img_box">
+          <span class="upload_img_btn"></span>
+          <input type="file" id="upload_photo" onchange="selectImage(this)" class="upload_photo">  
+        </li>
+        
       </ul>
     </p>
 
@@ -70,18 +71,39 @@
   <script>  
 
 function selectImage(input){
+  var image = "";
   if(!input.files || !input.files[0]){
     return;
   } else if(input.fileSize > 2000){
 
   }
+  $(".upload_img_tips").hide();
   var reader = new FileReader();
   reader.onload = function(evt){
-    var html = '<img src="'+evt.target.result+'" style="width: 100%;">';
-    document.getElementById('click').innerHTML = html;
     image = evt.target.result;
+    var html = '<li><a class="delete_img" onclick="javascript:$(this).parent().remove()"></a><img class="thumbnail" src="'+image+'"></li>';
+    
+    $(".upload_img_ul").append(html);
   }
   reader.readAsDataURL(input.files[0]);
+  var data = new FormData();
+  data.append("upload", input.files[0]);
+  $.ajax({
+    type: "POST",
+    url: "/upload/images",
+    contentType: false, 
+    processData: false, 
+    data:{file: data},
+    dataType: "JSON",
+    success: function(rtn){
+      console.log(rtn);
+    }
+  })
+}
+
+function deleteImage(obj){
+  obj.parent().remove();
+
 }
 </script> 
 </body>
