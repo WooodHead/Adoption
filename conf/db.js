@@ -1,12 +1,11 @@
 var mysql = require('mysql');
 var db = mysql.createPool({
-  host : 'server.ngrok.cc',
+  host : 'localhost',
   user : 'root',
-  password : 'ursafenow@#233',
-  port: "5512",
+  password : '789632145',
+  port: "3306",
   database : "adoption"
 });
 
-// db.connect();
 console.log("Database connect succed!");
 module.exports = db;

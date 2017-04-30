@@ -1,110 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-  <% include head.html %>
-<body>
-  <% include header.html %>
-  <h1>找家啦~</h1>
-  <form id="" action="saveData" method="post" style="margin-top:20px;" class="upload_animal_form" name="upload">
-    <p class="upload_item">
-      <label for="name">名字：</label>
-      <input type="text" id="name" name="name" >
-    </p>
-    <p class="upload_item">
-      <label for="breed">品种：</label>
-      <input type="text" id="breed" name="breed" >
-    </p>
-    <p class="upload_item">
-      <label for="color">花色：</label>
-      <input type="text" id="color" name="color" >
-    </p>
-    <p class="upload_item">
-      <label for="age">年龄：</label>
-      <input type="text" id="age" name="age" >
-    </p>
-    <p class="upload_item">
-      <label for="sex">性别：</label>
-      <input type="text" id="sex" name="sex" >
-    </p>
-    <p class="upload_item">
-      <label for="sterilization">绝育情况：</label>
-      <input type="text" id="sterilization" name="sterilization" >
-    </p>
-    <p class="upload_item">
-      <label for="expelling">驱虫情况：</label>
-      <input type="text" id="expelling" name="expelling" >
-    </p>
-    <p class="upload_item">
-      <label for="vaccinum">疫苗情况：</label>
-      <input type="text" id="vaccinum" name="vaccinum" >
-    </p>
-    <p class="upload_item">
-      <label for="nature">性格：</label>
-      <input type="text" id="nature" name="nature" >
-    </p>
-    <p class="upload_item">
-      <label for="origin">来源：</label>
-      <input type="text" id="origin" name="origin" >
-    </p>
-    <p class="upload_item">
-      <label for="deposit">押金：</label>
-      <input type="text" id="deposit" name="deposit" >
-    </p>
-    <p class="upload_item">
-      <label for="remark">备注：</label>
-      <input type="text" id="remark" name="remark" >
-    </p>
-    <p class="upload_item">
-      <label>高清美照</label>
-      <ul class="upload_img_ul">
-        <span class="upload_img_tips">每次只能上传一张，最多上传6张</span>
-        <li class="upload_img_box">
-          <span class="upload_img_btn"></span>
-          <input type="file" id="upload_photo" onchange="selectImage(this)" class="upload_photo">  
-        </li>
-        
-      </ul>
-    </p>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>“喵汪回家”宠物免费领养品台</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="javascripts/jquery-2.2.4.js"></script>
+    <script src="javascripts/common.js"></script>
+  </head>
 
-    <input type="submit" value="提交申请">
-  </form>
-  </div>
-  <script>  
+  <body>
+    <% include header.html %>
+      <h1>找家啦~</h1>
+      <form id="data_form" method="post" style="margin-top:20px;" class="upload_animal_form" name="upload" enctype="multipart/form-data">
+        <p class="upload_item">
+          <label for="name">名字：</label>
+          <input type="text" id="name" name="name">
+        </p>
+        <p class="upload_item">
+          <label for="breed">品种：</label>
+          <input type="text" id="breed" name="breed">
+        </p>
+        <p class="upload_item">
+          <label for="color">花色：</label>
+          <input type="text" id="color" name="color">
+        </p>
+        <p class="upload_item">
+          <label for="age">年龄：</label>
+          <input type="text" id="age" name="age">
+        </p>
+        <p class="upload_item">
+          <label for="sex">性别：</label>
+          <input type="text" id="sex" name="sex">
+        </p>
+        <p class="upload_item">
+          <label for="sterilization">绝育情况：</label>
+          <input type="text" id="sterilization" name="sterilization">
+        </p>
+        <p class="upload_item">
+          <label for="expelling">驱虫情况：</label>
+          <input type="text" id="expelling" name="expelling">
+        </p>
+        <p class="upload_item">
+          <label for="vaccinum">疫苗情况：</label>
+          <input type="text" id="vaccinum" name="vaccinum">
+        </p>
+        <p class="upload_item">
+          <label for="nature">性格：</label>
+          <input type="text" id="nature" name="nature">
+        </p>
+        <p class="upload_item">
+          <label for="origin">来源：</label>
+          <input type="text" id="origin" name="origin">
+        </p>
+        <p class="upload_item">
+          <label for="deposit">押金：</label>
+          <input type="text" id="deposit" name="deposit">
+        </p>
+        <p class="upload_item">
+          <label for="remark">备注：</label>
+          <input type="text" id="remark" name="remark">
+        </p>
+        <p class="upload_item">
+          <label>高清美照</label>
+          <div class="photos">
+            <ul class="upload_img_ul">
+              <span class="upload_img_tips">每次只能选择一张，最多上传6张</span>
+              <li class="upload_img_box">
+                <span class="upload_img_btn"></span>
+                <input type="file" name="photos[]" id="photos1" onchange="selectImage(this)" class="upload_photo">
+              </li>
+            </ul>
+          </div>
+        </p>
+        <input type="button" id="submit" value="提交申请">
+      </form>
+      </div>
+<script>
+var imgID = 0;  //记录图片&上传按钮ID
+var imgLen = 0; //记录用户上传的图片数量
 
-function selectImage(input){
-  var image = "";
-  if(!input.files || !input.files[0]){
+/*
+*选择图片时：生成缩略图&生成下一个上传按钮
+*@params：input(type="file")元素
+*/
+function selectImage(input) {
+  var image = ""; //保存图片编码
+  if (!input.files || !input.files[0]) {  //图片不存在 or 上传图片出错
     return;
-  } else if(input.fileSize > 2000){
-
   }
+  if(input.files[0].size > (1024*1024*10)){ //图片大于10M
+    alert("图片太大了啦~服务器会受不了的哦  (=´ω｀=)  重新选一张吧~");
+    return;
+  }
+  
   $(".upload_img_tips").hide();
-  var reader = new FileReader();
-  reader.onload = function(evt){
-    image = evt.target.result;
-    var html = '<li><a class="delete_img" onclick="javascript:$(this).parent().remove()"></a><img class="thumbnail" src="'+image+'"></li>';
-    
-    $(".upload_img_ul").append(html);
+
+  if(imgLen < 6){
+    imgID++;
+    imgLen++;
+    var reader = new FileReader();
+    reader.readAsDataURL(input.files[0]);
+    //生成缩略图
+    reader.onload = function (evt) {
+      image = evt.target.result;
+      var html1 = '<li><a class="delete_img" index="' + imgID + '" onclick="deleteImage($(this))"></a><img class="thumbnail" src="' + image + '"></li>';
+      var html2 = '<input type="file" name="photos[]" id="photo' + (imgID+1) + '" onchange="selectImage(this)" class="upload_photo">';
+      $(".upload_img_ul").append(html1);
+      $(".upload_img_box").append(html2);
+      $("#photo"+imgID).hide();
+    }
+  } else {
+    common.alert("最多只能上传6张图片哦~超出部分将无效");
+    return;
   }
-  reader.readAsDataURL(input.files[0]);
-  var data = new FormData();
-  data.append("upload", input.files[0]);
+}
+
+/*
+*删除图片时：删除缩略图&删除对应的上传按钮
+*@params：删除图标本身(a元素)
+*/
+function deleteImage(obj) {
+  obj.parent().remove();
+  var index = obj.attr("index");
+  $("#photo"+index).remove();
+  imgLen--;
+}
+
+/*
+*提交申请时：传递数据到服务器
+*@params：删除图标本身(a元素)
+*/
+function uploadData() {
+  var data = new FormData($("#data_form")[0]);
   $.ajax({
     type: "POST",
-    url: "/upload/images",
-    contentType: false, 
-    processData: false, 
-    data:{file: data},
+    url: "/saveData",
+    contentType: false,
+    processData: false,
+    data: data,
     dataType: "JSON",
-    success: function(rtn){
-      console.log(rtn);
+    success: function (rtn) {
+      if(rtn.data !== undefined){
+        window.location.href = "./detail_info?id="+rtn.data.insertId;
+      }
     }
   })
 }
 
-function deleteImage(obj){
-  obj.parent().remove();
+$(function () {
+  $("#submit").click(function () {
+    uploadData();
+  })
+})
 
-}
-</script> 
-</body>
+</script>
+  </body>
+
 </html>

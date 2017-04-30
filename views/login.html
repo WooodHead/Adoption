@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>“喵汪回家”宠物免费领养品台</title>
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <script src="../javascripts/jquery-2.2.4.js"></script>
+    <script src="../javascripts/common.js"></script>
+</head>
+<body>
+  <% include header.html %>
+<div class="container">
+    <div class="logo">
+
+    </div>
+
+    <form name="signin" id="singin" action="signin" method="post">
+        <p>
+            <label>用户</label>
+            <input type="text" name="email"  placeholder="邮箱地址">
+        </p>
+        <p>
+            <label>密码</label>
+            <input type="password" name="password" placeholder="请输入登录密码">
+        </p>
+        <p>
+            <input type="submit" value="登录" id="signinBtn">
+        </p>
+    </form>
+
+    <form name="signup" id="signup">
+        <p>
+            <label>昵称</label>
+            <input type="text" name="nickname" placeholder="请输入昵称">
+        </p>
+        <p>
+            <label>邮箱</label>
+            <input type="text" name="email" id="email" placeholder="邮箱地址">
+        </p>
+        <p>
+            <label>手机</label>
+            <input type="text" name="tetephone" placeholder="手机号码">
+        </p>
+        <p>
+            <label>密码</label>
+            <input type="password" name="password" placeholder="请输入登录密码">
+        </p>
+        <p>
+            <label>确认密码</label>
+            <input type="password" placeholder="请再次输入登录密码">
+        </p>
+        <p>
+            <input type="button" value="注册" id="signupBtn">
+        </p>
+    </form>
+</div>
+
+<script>
+
+$(function(){
+
+    $("#signupBtn").click(function(){
+        $.ajax({
+            url: "/users/signup",
+            type: "POST",
+            data: $("#signup").serialize(),
+            dataType: "JSON",
+            success: function(rtn){
+                alert("您已注册成功，请前往您的邮箱"+$("#email").val()+"激活账号。");
+                location.reload();  //刷新页面
+            }
+        });
+    });
+
+    // $("#signinBtn").click(function(){
+
+    // })
+})
+
+</script>
+</body>
+</html>
